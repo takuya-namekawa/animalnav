@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Animalnav</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class="d-flex flex-column vh-100">
+     <% if flash[:notice] %>
+    <div class="alert alert-info">
+      <p class="notice"><%= notice %></p>
+    </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <p class="alert"><%= alert %></p>
+    </div>
+    <% end %>
+
+
+  <header class="shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light">
+     <div class="container">
+      <a class="navbar-brand p-3" href="/"><h2>Animal Nav</h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+            <% if user_signed_in? %>
+            <li class="search_form">
+              <%= form_with url: search_path, local: true, method: :get do |f| %>
+              <%= f.text_field :word %>
+              <%= f.select :range, options_for_select([['User'], ['Animal']]) %>
+              <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backward_match"], ["部分一致","partial_match"]]) %>
+              <%= f.submit "検索する", class: "btn btn-danger" %>
+            </li>
+            <% end %>
+            <li class="nav-item">
+             <%= link_to  user_path(current_user), class: 'btn btn-outline-danger  mr-2' do %>
+            <i class="fas fa-user"></i> MyPege<% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to  users_path, class: 'btn btn-outline-danger  mr-2' do %>
+            <i class="fas fa-users"></i> Navigator一覧<% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to  animals_path, class: 'btn btn-outline-danger  mr-2' do %>
+            <i class="fas fa-feather-alt"></i> Pet一覧<% end %>
+            </li>
+             <li class="nav-item">
+              <%= link_to  new_animal_path, class: 'btn btn-outline-danger  mr-2' do %>
+            <i class="fas fa-dove"></i> Pet紹介<% end %>
+            </li>
+              <%= link_to  destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger mr-2' do %>
+            <i class="fas fa-sign-out-alt"></i></i> Logout<% end %>
+            </li>
+            <% else %>
+            <li class="nav-item">
+              <%= link_to  new_user_registration_path, class: 'btn btn-outline-danger  mr-2' do %>
+            <i class="fas fa-paw"></i> 新規登録<% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to  new_user_session_path, class: 'btn btn-outline-danger mr-2' do %>
+            <i class="fas fa-cat"></i> ログイン<% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to  users_path, class: 'btn btn-outline-danger  mr-2' do %>
+            <i class="fas fa-users"></i> Navigator一覧<% end %>
+            </li>
+              <%= link_to  animals_path, class: 'btn btn-outline-danger  mr-2' do %>
+            <i class="fas fa-feather-alt"></i> Pet一覧<% end %>
+            </li>
+            </ul>
+            <% end %>
+       </div>
+      </nav>
+    </header>
+</body>
+<main class="mb-auto">
+  <%= yield %>
+</main>
+<footer>
+  <p class="p-3 bg-danger  text-center  text-white">CopyRight Animal Nav</p>
+</footer>
+</html>

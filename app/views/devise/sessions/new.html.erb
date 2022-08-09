@@ -1,0 +1,25 @@
+<div class="containar">
+      <div class="row no-gutters">
+        <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+          <h5 class="text-dark bg-light py-4 mb-0">ログイン</h5>
+            <div class="form-body p-4">
+               <%= form_with model: @user, url: user_session_path, local: true do |f| %>
+               <%= f.label :メールアドレス %>
+               <%= f.email_field :email, autofocus: true, class:"form-control", id:"inputEmail", placeholder:"メールアドレス" %>
+               <%= f.label :password %>
+               <%= f.password_field :password, autocomplete: "off", class:"form-control", id:"inputPassword", placeholder:"パスワード" %>
+               <% if devise_mapping.rememberable? %>
+               <input type="checkbox" class="form-check-input" value="" id="invalidCheck" required>
+               <label for="invalidCheck" class="form-check-label">
+               本人で間違い無し
+               </label>
+               <% end %>
+               <div class="actions">
+               <%= f.submit "ログイン" ,class: "btn btn-outline-success"%>
+               </div>
+               <%= render "devise/shared/links" %>
+               <% end %>
+            </div>
+        </div>
+      </div>
+</div>

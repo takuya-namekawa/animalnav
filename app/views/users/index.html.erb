@@ -1,0 +1,41 @@
+
+<h3 class="p-3 bg-danger  text-center  text-white">-Navigator Index-</h3>
+<div class="card-group mb-3">
+
+  <% @users.each do |user| %>
+  <div class="card" style="width: 18rem">
+    <%= link_to user_path(user) do %>
+    <%= image_tag user.get_profile_image(300,300), class:"card-img-top";%>
+    <% end %>
+    <div class="card-body">
+     <h5 class="card-title"><%= link_to user.username ,user_path(user)%></h5>
+     <p>投稿数:<%= user.animals.count %></p>
+     <p>コメント件数：<%= user.animal_comments.count %></p>
+     <p><%= link_to user_followings_path(user) do %></p>
+     <p>Follow: <%= user.followings.count %></p>
+     <% end %>
+     <p><%= link_to user_followers_path(user) do %></p>
+     <p>Follower: <%= user.followers.count %></p>
+     <% end %>
+     <% if user.id != current_user.id %>
+     <% if current_user.following?(user) %>
+      <p><%= link_to  user_relationships_path(user.id), method: :delete , class: "text-danger" do %></p>
+      <i class="fab fa-twitter-square"></i> フォロー外す<% end %>
+     <% else %>
+      <p><%= link_to  user_relationships_path(user.id), method: :post , class: "text-info" do %></p>
+      <i class="fab fa-twitter-square"></i>  フォローする<% end %>
+     <% end %>
+     <% end %>
+    <%= link_to  "Navigator" ,user_path(user) , class: "btn btn-outline-info"%>
+    </div>
+  </div>
+    <% end %>
+ </div>
+
+
+
+
+
+
+
+

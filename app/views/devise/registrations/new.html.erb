@@ -1,0 +1,34 @@
+<div class="containar">
+      <div class="row no-gutters">
+        <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+          <h5 class="text-dark bg-light py-4 mb-0">新規登録</h5>
+            <div class="form-body p-4">
+              <%= form_with model: @user, local: true do |f| %>
+              <div class="text-left">
+                <%= f.label :ユーザー名 %>
+                <%= f.text_field :name, autofocus: true, class:"form-control", id:"inputName", placeholder:"名前"%>
+              </div>
+              <div class="text-left">
+                <%= f.label :メールアドレス %>
+                <%= f.text_field :email,autofocus: true, class: 'form-control', placeholder: 'メールアドレス *', id: 'email'  %>
+              </div>
+              <div class="text-left">
+                <%= f.label :password %>
+                <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> characters minimum)</em>
+                <% end %><br />
+                <%= f.password_field :password, autocomplete: "new-password" , class: 'form-control'%>
+              </div>
+              <div class="text-left">
+                <%= f.label :password_confirmation %><br />
+                <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
+              </div>
+              <div class="actions">
+                <%= f.submit "新規登録" ,class: "btn btn-outline-success"%>
+              </div>
+                <% end %>
+
+            </div>
+        </div>
+      </div>
+</div>

@@ -1,0 +1,40 @@
+<% if @animal.errors.any? %>
+  <div class="alert alert-danger">
+    <h2><%= pluralize(@animal.errors.count, "error") %> prohibited this object from being saved: not successfully</h2>
+    <ul>
+      <% @animal.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="containar">
+   <h3 class="p-3 bg-danger  text-center  text-white">-Pets Introduction-</h3>
+   <div class="row no-gutters">
+   <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+      <h5 class="text-dark bg-light py-4 mb-0">ペット紹介ページ</h5>
+        <div class="form-body p-4">
+          <%= form_with model: @animal, local: true do |f| %>
+
+          <div class="text-left">
+            <%= f.label :ペット名 %>
+            <%= f.text_field :title, autofocus: true, class:"form-control", id:"inputName", placeholder:"ペット名"%>
+          </div>
+
+          <div class="text-left">
+            <%= f.label :ペット紹介 %>
+            <%= f.text_area :body,autofocus: true, class: "form-control", placeholder: "ペット紹介" %>
+          </div>
+          <div class="text-left">
+            <%= f.label :ペット紹介画像 %><br>
+            <%= f.file_field :profile_image, accept: "image/" %>
+          </div>
+          <%= f.submit "紹介する" , class: "btn btn-outline-success" %>
+
+
+   <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<% if @user.errors.any? %>
+   <div class="alert alert-danger">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this object from being saved: not successfully</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="containar">
+   <h3 class="p-3 bg-danger  text-center  text-white">-Navigator Edit-</h3>
+   <div class="row no-gutters">
+   <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
+      <h5 class="text-dark bg-light py-4 mb-0">プロフィール編集</h5>
+        <div class="form-body p-4">
+          <%= form_with model: @user, local: true do |f| %>
+
+          <div class="text-left">
+            <%= f.label :ユーザー名 %>
+            <%= f.text_field :username, autofocus: true, class:"form-control", id:"inputName", placeholder:"名前"%>
+          </div>
+          <div class="text-left">
+            <%= f.label :メールアドレス %>
+            <%= f.text_field :email,autofocus: true, class: 'form-control', placeholder: 'メールアドレス *', id: 'email'  %>
+          </div>
+          <div class="text-left">
+            <%= f.label :プロフィール %>
+            <%= f.text_area :profile,autofocus: true, class: "form-control", placeholder: "プロフィール" %>
+          </div>
+          <div class="text-left">
+            <%= f.label :プロフィール画像 %><br>
+            <%= f.file_field :profile_image, accept: "image/" %>
+          </div>
+          <%= f.submit "変更する" , class: "btn btn-outline-success" %>
+
+
+         <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

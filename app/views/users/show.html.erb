@@ -1,0 +1,64 @@
+<div class="containar">
+   <h3 class="p-3 bg-danger  text-center  text-white">-Navigator-</h3>
+     <table class="table  table-light  ">
+       <tr>
+         <thed>
+           <tr>
+             <th>プロフィール画像</th>
+             <th>名前</th>
+             <th>自己紹介</th>
+             <% if @user.id != current_user.id %>
+             <th><% if current_user.following?(@user) %>
+             <%= link_to  user_relationships_path(@user.id), method: :delete , class: "text-danger" do %>
+               <i class="fab fa-twitter-square"></i></td> フォロー外す<% end %>
+             <% else %>
+             <%= link_to  user_relationships_path(@user.id), method: :post , class: "text-info" do %>
+               <i class="fab fa-twitter-square"></i></td>  フォローする<% end %>
+             <% end %>
+             <% end %></th>
+           </tr>
+         </thed>
+         <td><%= image_tag @user.get_profile_image(200,200), class:"mt-3 rounded-circle"; %></td>
+         <td><%= @user.username %></td>
+         <td><%= @user.profile %></td>
+         <td><% if @user.id == current_user.id %>
+         <td><%= @user.email %></td>
+         <td> <%= link_to "プロフィール編集" , edit_user_path(@user) , class: "btn btn-outline-info"%></td>
+         <% end %>
+        </tr>
+     </table>
+</div>
+<div class="containar">
+  <div class="row">
+    <div class="card-group mb-3">
+      <% @user.animals.each do |animal| %>
+      <div class="card border-dark mb-3 " style="width: 18rem;">
+
+        <%= image_tag animal.get_profile_image(200,200), class: "card-img-top"%>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <%= link_to animal_path(animal),class: "font-weight-bold   text-secondary " do %>
+           <i class="fas fa-cookie-bite"></i>  <%= animal.title %>を見に行く<% end %>
+            </li>
+            <% if @user.id == current_user.id %>
+            <li class="list-group-item">
+              <%= link_to edit_animal_path(animal),class: "font-weight-bold  text-secondary "  do %>
+              <i class="fas fa-edit"></i> <%= animal.title %>の情報を編集する
+              <% end %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to animal_path(animal), method: :delete, data: {confirm: "本当にさよならしますか？"} ,class: "font-weight-bold  text-secondary " do %>
+              <i class="fas fa-ghost"></i> <%= animal.title %>と本当にさよならしますか?<% end %>
+            </li>
+            <% end %>
+            <li class="list-group-item">
+             <time><%= animal.updated_at.strftime("%Y-%m-%d %H:%M") %></time>更新
+            </li>
+          </ul>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+

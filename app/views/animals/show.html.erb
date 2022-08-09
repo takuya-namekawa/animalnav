@@ -1,0 +1,55 @@
+<h3 class="p-3 bg-danger  text-center  text-white">-Pet Nave-</h3>
+　<div class="card-list-containar py-5">
+
+    <div class="card w-50 mx-auto  shadow-lg">
+
+        <%= image_tag @animal.get_profile_image(300,300), class:"card-img-top"; %>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-10">
+              <strong>
+              <p class="card-title">
+
+              <%= @animal.title %>
+              </p>
+              <p class="card-txet">Pet紹介
+
+              <%= simple_format @animal.body %>
+              </p>
+              <p>コメント件数：<%= @animal.animal_comments.count %></p>
+              <%= render 'favorite', animal: @animal %>
+              </strong>
+             
+              <div>
+                <% @animal.animal_comments.each do |animal_comment| %>
+                  <div class="card-header">
+                     <%= image_tag animal_comment.user.get_profile_image(100,100) %>
+                     <%= animal_comment.user.username %><br>
+                     <time><%= animal_comment.updated_at.strftime("%Y-%m-%d %H:%M") %></time>更新
+                  </div>
+                  <div class="card-body">
+                    <%= animal_comment.comment %>
+                  </div>
+                  <div class="card-footer">
+                    <% if animal_comment.user == current_user %>
+                    <%= link_to "コメントを削除する", animal_animal_comment_path(animal_comment.animal, animal_comment), method: :delete , class: "btn btn-outline-primary"%>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <div>
+                <%= form_with model: [@animal, @animal_comment] do |f| %>
+                <%= f.text_area :comment, rows: '5', placeholder: "お気軽にコメントをどうぞ" ,class: "form-control "%>
+                <%= f.submit "コメントを送信する" ,class: "my-2  btn btn-outline-info" %>
+                <% end %>
+              </div>
+                <% if @animal.user.id == current_user.id %>
+                <%= link_to "編集する" , edit_animal_path(@animal) ,class: "btn btn-outline-success"%>
+                <% end %>
+             </div>
+          </div>
+      </div>
+   </div>
+</div>
+
+
